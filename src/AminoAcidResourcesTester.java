@@ -59,4 +59,14 @@ class AminoAcidResourcesTester{
     }
   }
 
+  @Test
+  public void testConstructor(){
+      String str = "CCGUUGGCACUGUUG";
+      AminoAcidLL case1 = new AminoAcidLL(str);
+
+
+  }
+
+
+
 }
