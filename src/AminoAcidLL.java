@@ -17,8 +17,8 @@ class AminoAcidLL{
      this.aminoAcid = AminoAcidResources.getAminoAcidFromCodon(inCodon);
      this.codons = AminoAcidResources.getCodonListForAminoAcid(aminoAcid);
      this.counts = new int[codons.length];
-     for(int i = 0; i < codons.length; i++){
-       if(codons[i].equals(inCodon)){
+     for(int i = 0; i < codons.length; i++) {
+       if (codons[i].equals(inCodon)) {
          counts[i]++;
        }
      }
