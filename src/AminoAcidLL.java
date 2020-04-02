@@ -22,7 +22,8 @@ class AminoAcidLL{
          counts[i]++;
        }
      }
-  }
+     next = null;
+  }// refrence the node construction because this needs to be class node
 
   /********************************************************************************************/
   /* Recursive method that increments the count for a specific codon:
@@ -31,13 +32,27 @@ class AminoAcidLL{
    * If there is no next node, add a new node to the list that would contain the codon. 
    */
   private void addCodon(String inCodon){
-  
+       if(AminoAcidResources.getAminoAcidFromCodon(inCodon) == aminoAcid){
+           for(int i = 0; i < codons.length; i++){
+               if(codons[i].equals(inCodon.toUpperCase())){
+                    counts[i]++;
+               }
+           }
+       }
+       else if(next != null){
+           next.addCodon(inCodon);
+       }
+       else{
+           AminoAcidLL node = new AminoAcidLL(inCodon);
+           next = node;
+       }
   }
 
 
   /********************************************************************************************/
   /* Shortcut to find the total number of instances of this amino acid */
   private int totalCount(){
+
     return 0;
   }
 
@@ -64,6 +79,10 @@ class AminoAcidLL{
   /* Recursive method that finds the differences in **Amino Acid** counts. 
    * the list *must* be sorted to use this method */
   public int aminoAcidCompare(AminoAcidLL inList){
+      if(inList.isSorted() != true){
+
+      }
+
     return 0;
   }
 
@@ -71,7 +90,8 @@ class AminoAcidLL{
   /* Same ad above, but counts the codon usage differences
    * Must be sorted. */
   public int codonCompare(AminoAcidLL inList){
-    return 0;
+
+      return 0;
   }
 
 
@@ -98,7 +118,20 @@ class AminoAcidLL{
   /********************************************************************************************/
   /* Static method for generating a linked list from an RNA sequence */
   public static AminoAcidLL createFromRNASequence(String inSequence){
-    return null;
+    AminoAcidLL list = null;
+    if(inSequence.length() >= 3 && AminoAcidResources.getAminoAcidFromCodon(inSequence.substring(0,2)) != '*'){
+        list = new AminoAcidLL(inSequence.substring(0,3));
+
+        for(int i = 3; i < inSequence.length() -2; i+=3){
+            if(AminoAcidResources.getAminoAcidFromCodon(inSequence.substring(i, i + 3)) != '*'){
+                list.addCodon(inSequence.substring(i, i + 3));
+            }
+            else{
+                break;
+            }
+        }
+    }
+      return list;
   }
 
 
