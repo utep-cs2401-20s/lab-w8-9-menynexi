@@ -1,4 +1,5 @@
-class AminoAcidResources{
+class
+AminoAcidResources{
   public static char getAminoAcidFromCodon(String s){
     //if this is not a 3 character string, return NULL
     if(s.length()!=3) return (char)0;
