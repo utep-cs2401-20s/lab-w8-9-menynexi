@@ -52,15 +52,18 @@ class AminoAcidLL{
   /********************************************************************************************/
   /* Shortcut to find the total number of instances of this amino acid */
   private int totalCount(){
-
-    return 0;
+      int total = 0;
+      for(int i = 0; i < counts.length; i++){
+          total =+ counts[i];
+      }
+    return total;
   }
 
   /********************************************************************************************/
   /* helper method for finding the list difference on two matching nodes
   *  must be matching, but this is not tracked */
   private int totalDiff(AminoAcidLL inList){
-    return Math.abs(totalCount() - inList.totalCount());
+      return Math.abs(totalCount() - inList.totalCount());
   }
 
 
@@ -79,39 +82,79 @@ class AminoAcidLL{
   /* Recursive method that finds the differences in **Amino Acid** counts. 
    * the list *must* be sorted to use this method */
   public int aminoAcidCompare(AminoAcidLL inList){
-      if(inList.isSorted() != true){
+    if(){
 
-      }
-
-    return 0;
+    }
   }
 
   /********************************************************************************************/
   /* Same ad above, but counts the codon usage differences
    * Must be sorted. */
   public int codonCompare(AminoAcidLL inList){
+//if the list is not sorted you need to sort the list
+      if(inList.isSorted() != true){
+          inList = sort(inList);
+      }
 
-      return 0;
+
+      if(inList.next == null && next == null){
+          return codonDiff(inList);
+      }
+      else if(next == null){
+          return inList.totalCount() + codonCompare(inList);
+      }
+      else if(inList.next == null){
+          return totalCount() + codonCompare(inList);
+      }
+      return totalDiff(inList) + next.codonCompare(inList);
   }
 
 
   /********************************************************************************************/
   /* Recursively returns the total list of amino acids in the order that they are in in the linked list. */
   public char[] aminoAcidList(){
+      //base case most simple case is when next == null
+      if(next == null){
+          return new char[aminoAcid];
+      }
+
+      char[] amino = next.aminoAcidList();/// cant use aminoacid as repeated variable
+      char[] remaine = new char[amino.length + 1];
+      remaine[0] = aminoAcid;
     return new char[]{};
   }
 
   /********************************************************************************************/
   /* Recursively returns the total counts of amino acids in the order that they are in in the linked list. */
   public int[] aminoAcidCounts(){
-    return new int[]{};
+      //base case if next is null it is the end *literally*
+      if(next == null){
+          return new int[totalCount()];
+      }
+
+      int[] amino = next.aminoAcidCounts();
+      int[] remaine = new int[amino.length + 1];
+      remaine[0] = totalCount();
+      for(int i = 1; i < remaine.length; i++){
+          remaine[i] = amino[i];
+      }
+    return remaine;
   }
 
 
   /********************************************************************************************/
   /* recursively determines if a linked list is sorted or not */
   public boolean isSorted(){
-    return false;
+      boolean sorted = true; //this just made sence logically it was not needed but it made it more readable
+      boolean notSorted = false;
+      if(next == null){
+          return sorted; //because when next is null the list does not need to be sorted it reached its end
+      }
+      if(aminoAcid > next.aminoAcid){
+          return notSorted;
+      }
+
+      return next.isSorted();
   }
 
 
